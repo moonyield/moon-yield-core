@@ -57,6 +57,8 @@ contract Converter {
         external
         returns (uint256 amountOut)
     {
+        tokens.axlUSDC.transferFrom(msg.sender, address(this), amount);
+        tokens.axlUSDC.approve(address(routers.Stable), amount);
         amountOut = routers.Stable.swapToBase(
             pools.axlUSDC4pool,
             pools.base4pool,
@@ -64,14 +66,18 @@ contract Converter {
             0,
             amount,
             1,
-            1
+            block.timestamp
         );
+
+        tokens.USDC.transfer(msg.sender, amountOut);
     }
 
     function WormholeUSDCtoAxlUSDC(uint256 amount)
         external
         returns (uint256 amountOut)
     {
+        tokens.USDC.transferFrom(msg.sender, address(this), amount);
+        tokens.USDC.approve(address(routers.Stable), amount);
         amountOut = routers.Stable.swapFromBase(
             pools.axlUSDC4pool,
             pools.base4pool,
@@ -79,7 +85,9 @@ contract Converter {
             0,
             amount,
             1,
-            1
+            block.timestamp
         );
+
+        tokens.axlUSDC.transfer(msg.sender, amountOut);
     }
 }

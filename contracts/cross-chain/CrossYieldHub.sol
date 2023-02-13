@@ -25,6 +25,7 @@ contract CrossYieldHub is AxelarExecutable, Ownable {
     Converter converter;
     Vault vault;
     IERC20 USDC;
+    IERC20 axlUSDC;
 
     // could be handled better by hashing together the chain & contract address to avoid the nested mapping.
     mapping(string => mapping(address => bool)) public allowedSources;
@@ -54,6 +55,7 @@ contract CrossYieldHub is AxelarExecutable, Ownable {
         vault = _vault;
 
         USDC = IERC20(address(0x931715FEE2d06333043d11F658C8CE934aC61D0c));
+        axlUSDC = IERC20(address(0xCa01a1D0993565291051daFF390892518ACfAD3A));
     }
 
     function allowSource(string memory chain, address sourceContract)
@@ -86,8 +88,11 @@ contract CrossYieldHub is AxelarExecutable, Ownable {
         ) revert WrongToken();
 
         address depositor = abi.decode(payload, (address));
+
+        axlUSDC.approve(address(converter), amount);
         uint256 usdcReceived = converter.axlUSDCtoWormholeUSDC(amount);
 
+        USDC.approve(address(vault), usdcReceived);
         vault.depositFor(usdcReceived, depositor);
 
         emit Deposit(depositor, sourceChain, sourceAddress, amount);
@@ -103,7 +108,10 @@ contract CrossYieldHub is AxelarExecutable, Ownable {
         vault.withdraw(shares);
 
         uint256 usdcBalance = USDC.balanceOf(address(this)) - before;
+        USDC.approve(address(converter), usdcBalance);
         uint256 toSend = converter.WormholeUSDCtoAxlUSDC(usdcBalance);
+
+        axlUSDC.approve(address(gateway), toSend);
         gateway.sendToken(
             targetChain,
             msg.sender.toString(),
