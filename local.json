@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Avalanche",
+    "chainId": 43114,
+    "gateway": "0x5029C0EFf6C34351a0CEc334542cDb22c7928f78",
+    "gasReceiver": "0xB53C693544363912D2A034f70D9d98808D5E192a",
+    "constAddressDeployer": "0x617179a15fEAa53Fa82ae80b0fc3E85b7359a748",
+    "tokens": {
+      "uusdc": "axlUSDC"
+    },
+    "rpc": "http://localhost:8500/0",
+    "tokenName": "Avax",
+    "tokenSymbol": "AVAX"
+  },
+  {
+    "name": "Moonbeam",
+    "chainId": 1284,
+    "gateway": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
+    "gasReceiver": "0x27927CD55db998b720214205e598aA9AD614AEE3",
+    "constAddressDeployer": "0x617179a15fEAa53Fa82ae80b0fc3E85b7359a748",
+    "tokens": {
+      "uusdc": "axlUSDC"
+    },
+    "rpc": "http://localhost:8500/1",
+    "tokenName": "Glimmer",
+    "tokenSymbol": "GLMR"
+  }
+]

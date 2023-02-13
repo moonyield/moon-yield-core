@@ -1,0 +1,33 @@
+{
+  "name": "cross-yield",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "chains:local": "npx hardhat run ./scripts/createLocal.js",
+    "chains:fork": "npx hardhat run ./scripts/createFork.js",
+    "test": "npx hardhat run ./scripts/tests/fork-flow.test.js"
+  },
+  "devDependencies": {
+    "@axelar-network/axelar-local-dev": "1.1.0",
+    "@ethersproject/abi": "^5.4.7",
+    "@ethersproject/providers": "^5.4.7",
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.0.0",
+    "@nomiclabs/hardhat-etherscan": "^3.0.0",
+    "@typechain/ethers-v5": "^10.1.0",
+    "@typechain/hardhat": "^6.1.2",
+    "chai": "^4.2.0",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.4.7",
+    "hardhat": "^2.12.7",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.0",
+    "typechain": "^8.1.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.1"
+  }
+}
