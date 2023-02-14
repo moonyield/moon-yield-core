@@ -8,6 +8,8 @@ import {IV2Router} from "./interfaces/dex/IV2Router.sol";
 import {IStableRouter} from "./interfaces/dex/IStableRouter.sol";
 import {ISwap} from "./interfaces/dex/ISwap.sol";
 
+error NotEnoughFunds();
+
 contract Converter {
     struct Routers {
         IStableRouter Stable;
@@ -59,8 +61,9 @@ contract Converter {
         external
         returns (uint256 amountOut)
     {
+        tokens.WELL.transferFrom(msg.sender, address(this), amount);
         amountOut = _convertToken(tokens.WELL, tokens.USDC, amount, WELLtoUSDC);
-        tokens.WELL.transfer(msg.sender, amountOut);
+        tokens.USDC.transfer(msg.sender, amountOut);
     }
 
     function GLMRtoWormholeUSDC(uint256 amount)
@@ -68,6 +71,7 @@ contract Converter {
         payable
         returns (uint256 amountOut)
     {
+        if (msg.value != amount) revert NotEnoughFunds();
         amountOut = _convertToken(
             ERC20(address(0)),
             tokens.USDC,

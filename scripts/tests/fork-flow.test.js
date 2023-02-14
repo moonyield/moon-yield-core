@@ -41,12 +41,12 @@ async function main() {
 
   // testConverter(Moonbeam, MoonbeamSigner);
   // testVault(Moonbeam, MoonbeamSigner);
-  testFlow(
-    Moonbeam,
-    MoonbeamSigner,
-    RemoteChains[0],
-    wallet.connect(getDefaultProvider(RemoteChains[0].rpc))
-  );
+  // testFlow(
+  //   Moonbeam,
+  //   MoonbeamSigner,
+  //   RemoteChains[0],
+  //   wallet.connect(getDefaultProvider(RemoteChains[0].rpc))
+  // );
 }
 
 if (require.main === module) {
