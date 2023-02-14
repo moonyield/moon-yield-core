@@ -28,16 +28,17 @@ async function main() {
   const HUB = await deployMoonbeam(Moonbeam, MoonbeamSigner);
   console.log(`HUB deployed at ${HUB}`);
 
-  const promises = [];
-  for (const chain of RemoteChains) {
-    const provider = getDefaultProvider(chain.rpc);
-    promises.push(deployRemoteChains(chain, wallet.connect(provider), HUB));
-  }
-  await Promise.all(promises);
+  // const promises = [];
+  // for (const chain of RemoteChains) {
+  //   const provider = getDefaultProvider(chain.rpc);
+  //   promises.push(deployRemoteChains(chain, wallet.connect(provider), HUB));
+  // }
+  // await Promise.all(promises);
 
-  // console.log("--- BEGIN TESTS ---");
+  console.log("--- BEGIN TESTS ---");
 
   // testConverter(Moonbeam, MoonbeamSigner);
+  testVault(Moonbeam, MoonbeamSigner);
 }
 
 if (require.main === module) {

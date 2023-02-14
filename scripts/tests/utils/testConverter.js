@@ -1,12 +1,11 @@
+async function logBalances(address) {
+  console.log("Balances:");
+  console.log(`axlUSDC Balance: ${await Moonbeam.axlUSDC.balanceOf(address)}`);
+  console.log(`USDC Balance: ${await Moonbeam.USDC.balanceOf(address)}`);
+}
+
 async function testConverter(Moonbeam, wallet) {
   const user = wallet.address;
-  async function logBalances(address) {
-    console.log("Balances:");
-    console.log(
-      `axlUSDC Balance: ${await Moonbeam.axlUSDC.balanceOf(address)}`
-    );
-    console.log(`USDC Balance: ${await Moonbeam.USDC.balanceOf(address)}`);
-  }
 
   console.log("[test] Converter");
 
