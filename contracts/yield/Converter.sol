@@ -29,6 +29,9 @@ contract Converter {
     }
     Pools public pools;
 
+    address[] public WELLtoUSDC;
+    address[] public GLMRtoUSDC;
+
     constructor() {
         routers.Stable = IStableRouter(
             0xB0Dfd6f3fdDb219E60fCDc1EA3D04B22f2FFa9Cc
@@ -43,18 +46,37 @@ contract Converter {
 
         pools.axlUSDC4pool = ISwap(0xA1ffDc79f998E7fa91bA3A6F098b84c9275B0483);
         pools.base4pool = ISwap(0xB1BC9f56103175193519Ae1540A0A4572b1566F6);
+
+        WELLtoUSDC = [
+            address(tokens.WELL),
+            address(tokens.WGLMR),
+            address(tokens.USDC)
+        ];
+        GLMRtoUSDC = [address(tokens.WGLMR), address(tokens.USDC)];
     }
 
     function WELLToWormholeUSDC(uint256 amount)
         external
         returns (uint256 amountOut)
-    {}
+    {
+        amountOut = _convertToken(tokens.WELL, tokens.USDC, amount, WELLtoUSDC);
+        tokens.WELL.transfer(msg.sender, amountOut);
+    }
 
     function GLMRtoWormholeUSDC(uint256 amount)
         external
         payable
         returns (uint256 amountOut)
-    {}
+    {
+        amountOut = _convertToken(
+            ERC20(address(0)),
+            tokens.USDC,
+            amount,
+            GLMRtoUSDC
+        );
+
+        tokens.USDC.transfer(msg.sender, amountOut);
+    }
 
     function axlUSDCtoWormholeUSDC(uint256 amount)
         external

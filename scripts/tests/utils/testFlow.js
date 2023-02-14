@@ -7,6 +7,7 @@ function sleep(ms) {
 }
 
 async function testFlow(Moonbeam, MoonbeamSigner, Avalanche, AvalancheSigner) {
+  console.log("[TEST COMPLETE FLOW]");
   let tx;
 
   const user = MoonbeamSigner.address;
@@ -28,16 +29,13 @@ async function testFlow(Moonbeam, MoonbeamSigner, Avalanche, AvalancheSigner) {
   );
   await tx.wait();
 
+  console.log("--- [test Cross-chain Deposit]");
   const amount = 10000000;
   // Approve axlUSDC on Avalanche.
   tx = await Avalanche.axlUSDC.approve(Dispatch.address, amount);
   await tx.wait();
   console.log("Approved axlUSDC");
-  console.log(
-    `Dispatch has allowance to spend: ${(
-      await Avalanche.axlUSDC.allowance(user, Dispatch.address)
-    ).toString()} axlUSDC`
-  );
+
   // Deposit on Avalanche
   tx = await Dispatch.deposit(amount, { value: 3 * 1e6 });
   await tx.wait();
@@ -52,6 +50,26 @@ async function testFlow(Moonbeam, MoonbeamSigner, Avalanche, AvalancheSigner) {
   }
   console.log(`axlUSDC on Avax: ${await Avalanche.axlUSDC.balanceOf(user)}`);
   console.log(`shares on Glmr: ${await Vault.balanceOf(user)}`);
+  const axlUSDCAfterDeposit = await Avalanche.axlUSDC.balanceOf(user);
+
+  console.log("--- [test Cross-chain withdrawal]");
+  tx = await Vault.approve(HUB.address, shareBalance);
+  await tx.wait();
+  console.log("Approved vault shares");
+
+  tx = await HUB.exitPosition("Avalanche", shareBalance);
+  await tx.wait();
+
+  let axlUSDCBal;
+  while (true) {
+    axlUSDCBal = await Avalanche.axlUSDC.balanceOf(user);
+    if (axlUSDCBal.toString() !== axlUSDCAfterDeposit.toString()) break;
+    console.log(`axlUSDC: ${axlUSDCBal.toString()}`);
+
+    await sleep(2000);
+  }
+
+  console.log(`axlUSDC on Avax: ${await Avalanche.axlUSDC.balanceOf(user)}`);
 }
 
 module.exports = {
