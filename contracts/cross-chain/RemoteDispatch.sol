@@ -8,8 +8,6 @@ import {IERC20} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfac
 
 import {AddressToString} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/StringAddressUtils.sol";
 
-error GasNotProvided();
-
 contract RemoteDispatch {
     using AddressToString for address;
 
@@ -23,6 +21,8 @@ contract RemoteDispatch {
     string public depositSymbol;
 
     event Deposit(address indexed user, uint256 amount);
+
+    error GasNotProvided();
 
     constructor(
         IAxelarGateway _gateway,
