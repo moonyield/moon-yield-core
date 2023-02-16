@@ -40,7 +40,7 @@ async function main() {
   console.log("--- BEGIN TESTS ---");
 
   // testConverter(Moonbeam, MoonbeamSigner);
-  // testVault(Moonbeam, MoonbeamSigner);
+  testVault(Moonbeam, MoonbeamSigner);
   // testFlow(
   //   Moonbeam,
   //   MoonbeamSigner,
