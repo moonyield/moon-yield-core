@@ -15,10 +15,6 @@ async function testFlow(Moonbeam, MoonbeamSigner, Avalanche, AvalancheSigner) {
   const Vault = Moonbeam.contracts.VaultContract;
   const Dispatch = Avalanche.contracts.RemoteDispatchContract;
 
-  //   console.log(`depositSymbol: ${await Dispatch.depositSymbol()}`);
-  //   console.log(`depositToken: ${await Dispatch.depositToken()}`);
-  //   return;
-
   const shareBalanceStart = await Vault.balanceOf(user);
   console.log(`axlUSDC on Avax: ${await Avalanche.axlUSDC.balanceOf(user)}`);
   console.log(`shares on Glmr: ${await Vault.balanceOf(user)}`);

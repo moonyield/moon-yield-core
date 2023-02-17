@@ -46,7 +46,7 @@ contract Vault is ERC20, Ownable {
         earn();
         uint256 _after = balance();
         _amount = _after - _pool;
-        // FIX SHARES MINTING ERROR
+
         uint256 shares = 0;
 
         if (totalSupply() == 0) {
@@ -70,10 +70,17 @@ contract Vault is ERC20, Ownable {
 
     function withdraw(uint256 _shares) public {
         require(_shares > 0, "ZERO_SHARES");
-        uint256 r = (balance() * _shares) / totalSupply();
+        uint256 r = ((balance() * _shares) / totalSupply()) - 1;
         _burn(msg.sender, _shares);
         strategy.withdraw(r);
 
         want().transfer(msg.sender, r);
+    }
+
+    function redeem(uint256 _wantAmount) public {
+        _burn(msg.sender, _wantAmount);
+        strategy.withdraw(_wantAmount);
+
+        want().transfer(msg.sender, _wantAmount);
     }
 }

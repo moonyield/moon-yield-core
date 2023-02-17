@@ -6,7 +6,9 @@
   "scripts": {
     "chains:local": "npx hardhat run ./scripts/createLocal.js",
     "chains:fork": "npx hardhat run ./scripts/createFork.js",
-    "test": "npx hardhat run ./scripts/tests/fork-flow.test.js"
+    "test": "npx hardhat run ./scripts/tests/fork-flow.test.js",
+    "deploy:beam": "npx hardhat run ./scripts/deploy/deploy-beam.js --network moonbeam",
+    "deploy:remote": "npx hardhat run ./scripts/deploy/deploy-remote.js --network "
   },
   "devDependencies": {
     "@axelar-network/axelar-local-dev": "1.1.0",

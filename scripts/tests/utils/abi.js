@@ -8,5 +8,6 @@ module.exports = {
     Gateway: require("../../../artifacts/@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol/IAxelarGateway.json"),
     ERC20: require("../../../artifacts/@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IERC20.sol/IERC20.json"),
     StableRouter: require("../../../artifacts/contracts/yield/interfaces/dex/IStableRouter.sol/IStableRouter.json"),
+    MToken: require("../../../artifacts/contracts/yield/interfaces/lending/ICToken.sol/ICToken.json"),
   },
 };
